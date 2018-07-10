@@ -6,37 +6,37 @@ from datetime import datetime
 
 def get_connection(entity):
     dbname = "Files/bot_files/%s/bdb.db" % entity
-    connessione = sqlite3.connect(dbname)
-    cursore = connessione.cursor()
-    cursore.execute(
+    connection = sqlite3.connect(dbname)
+    cursor = connection.cursor()
+    cursor.execute(
          'CREATE TABLE IF NOT EXISTS groups(id INTEGER,'
          ' username TEXT, name TEXT, date TEXT, ext TEXT,'
          ' ext2 TEXT, ext3 TEXT)')
 
-    cursore.execute(
+    cursor.execute(
         'CREATE TABLE IF NOT EXISTS stats(settimana INTEGER,'
         ' scorsa INTEGER, mese INTEGER, scorso INTEGER, ext TEXT,'
         ' ext2 TEXT, ext3 TEXT)')
 
-    cursore.execute(
+    cursor.execute(
         'CREATE TABLE IF NOT EXISTS users(id INTEGER,'
         ' username TEXT, name TEXT, date TEXT, ext TEXT,'
         ' ext2 TEXT, ext3 TEXT)')
 
-    cursore.execute(
+    cursor.execute(
         'CREATE TABLE IF NOT EXISTS datas(id INTEGER,'
         ' ext0 TEXT, ext1 TEXT, ext2 TEXT, ext3 TEXT,'
         ' ext4 TEXT, ext5 TEXT)')
 
-    cursore.execute('SELECT settimana FROM stats')
-    res = cursore.fetchall()
+    cursor.execute('SELECT settimana FROM stats')
+    res = cursor.fetchall()
 
     if not res:
-        cursore.execute("INSERT INTO stats (settimana, scorsa, mese, scorso) VALUES (?, ?, ?, ?)", (0, 0, 0, 0))
+        cursor.execute("INSERT INTO stats (settimana, scorsa, mese, scorso) VALUES (?, ?, ?, ?)", (0, 0, 0, 0))
 
-    connessione.commit()
-    cursore.close()
-    connessione.close()
+    connection.commit()
+    cursor.close()
+    connection.close()
 
     return sqlite3.connect(dbname)
 
